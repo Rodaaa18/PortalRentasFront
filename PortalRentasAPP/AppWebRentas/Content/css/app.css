@@ -1,0 +1,57 @@
+﻿#imagen_login {
+    max-width: 100%;
+}
+.modal-xlg {
+    width: 93% !important;
+    max-width: 93% !important;
+}
+.form-group {
+    margin-bottom: 0.4rem !important;
+}
+label[class~="obligatorio-registrar_tasacion"]:before {
+    color: red;
+    content: "*";
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-container--default .select2-selection--single {
+    border: 1px solid #d8dbe0 !important;
+}
+.alertBox {
+    border: none !important;
+    background-color: #ffffff !important;
+    color: #060606 !important;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+    border-radius: 4px;
+    cursor: default !important;
+}
+input:disabled {
+    background:#eee !important;
+}
+.select2-container *:focus {
+    color: #768192;
+    background-color: #fff;
+    border-color: #958bef;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(50, 31, 219, 0.25);
+}
+
+#icono_modal {
+    height: 25px !important;
+    width: 25px !important;
+}
+
+.select2 {
+    width: 100% !important;
+}
+
+.dataTables_length div, select {
+    width: 50% !important;
+}
+
+.table th, .table td {
+    padding: 0.25rem !important;
+}
+

@@ -1,0 +1,39 @@
+﻿@using AppWebRentas.Models
+
+@model NotificacionViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+
+<section class="container-fluid mt-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Inicio</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-sm- col-md-2 col-lg-4">
+            <div class="text-left">
+                <h2>Menú</h2>
+            </div>
+            <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Notificaciones de Deuda
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <a href="@Url.Action("MostrarGrilla", "MainMenu")"> Ver Contribuyentes con Deuda</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

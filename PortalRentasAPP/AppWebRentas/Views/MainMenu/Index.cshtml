@@ -1,0 +1,172 @@
+﻿
+@using AppWebRentas.Models
+
+    @model NotificacionViewModel
+
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        ViewBag.Title = "Index";
+    }
+
+<section class="container-fluid mt-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Inicio</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-sm- col-md-2 col-lg-4">
+            <div class="text-left">
+                <h2>Menú</h2>
+            </div>
+            <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Notificaciones de Deuda
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <a href="@Url.Action("MostrarGrilla", "MainMenu")"> Ver Contribuyentes con Deuda</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <section style="width:100%;">
+            <div class="row">
+                <div class="col">
+                    <div id="login-box" class="d-flex flex-column justify-content-center">
+                        <div class="card shadow">
+                            <section class="col-lg-16 connectedSortable ui-sortable" style="margin-top: 10px;">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <div class="col-lg-16" style="margin-bottom: 10px;">
+                                        <div class=""  style="width:100%;>
+                                            <div class="card-body"  style="width:100%;>
+                                                <div class="table-responsive">
+                                                    <table id="grillaNotificacion" class="table" style="width:100%!                                 important;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Apellido y Nombre</th>
+                                                                <th>IdCuenta</th>
+                                                                <th>TyC</th>
+                                                                <th>Importe Neto</th>
+                                                                <th>Importe Total</th>
+                                                                <th>Interes</th>
+                                                                <th>Fecha de Notificación</th>
+                                                                <th>Fecha Alcance</th>
+                                                                <th>Observacion</th>
+                                                                <th>Nro Ntificación</th>
+                                                                <th>Email</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="width:100%!important;"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var columnas = [{
+                data: "ApellidoNombre",
+                orderable: true,
+                searchable: true,
+                className: "text-align-left"
+            }, {
+                data: "IdCuenta",
+                orderable: true,
+                searchable: true,
+                className: "text-align-left"
+            }, {
+                data: "TyC",
+                orderable: false,
+                searchable: false,
+                className: "text-align-center"
+
+            }, {
+                data: "ImporteNeto",
+                orderable: false,
+                searchable: false,
+                className: "text-align-right"
+
+            }, {
+                data: "ImporteTotal",
+                orderable: false,
+                searchable: false,
+                className: "text-align-right"
+
+            }, {
+                data: "Interes",
+                orderable: false,
+                searchable: false,
+                className: "text-align-right"
+
+            }, {
+                data: "FechaNotificacion",
+                orderable: false,
+                searchable: false,
+                className: "text-align-center"
+
+            }, {
+                data: "FechaAlcance",
+                orderable: false,
+                searchable: false,
+                className: "text-align-center"
+
+            }, {
+                data: "Observacion",
+                orderable: false,
+                searchable: false,
+                className: "text-align-center"
+
+            }, {
+                data: "NroNotificacion",
+                orderable: false,
+                searchable: false,
+                className: "text-align-center"
+
+            }, {
+                data: "Email",
+                orderable: false,
+                searchable: false,
+                className: "text-align-center"
+            }, {
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row, meta) {
+                    if (row.Email) {
+                        return `<a onclick="enviarEmail('${row.Email}')"><span class="btn btn-secondary">Enviar Notificación</span></a>`;
+                    } else return "";
+
+                }
+            }
+            ];
+
+            crearGrilla("#grillaNotificacion", "Notificaciones/ListarNotificacionesGrillaPaginada",
+                "Result", columnas, function () { },
+                true, true, 1, 'desc');
+
+
+        });
+
+
+
+        function enviarEmail(idCuenta) {
+            ajax("POST", "Notificaciones/SendEmail?idCuenta=" + idCuenta, function (retorno) {
+                msjOk("Email enviado");
+            });
+        };
+
+
+    </script>

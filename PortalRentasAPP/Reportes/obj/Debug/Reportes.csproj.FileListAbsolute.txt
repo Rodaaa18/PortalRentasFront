@@ -1,0 +1,4 @@
+C:\Users\INFT\Desktop\PortalRentasWebApp\PortalRentasAPP\Reportes\obj\Debug\Reportes.csproj.AssemblyReference.cache
+C:\Users\INFT\Desktop\PortalRentasWebApp\PortalRentasAPP\Reportes\obj\Debug\Reportes.csproj.SuggestedBindingRedirects.cache
+C:\Users\INFT\Desktop\PortalRentasWebApp\PortalRentasAPP\Reportes\obj\Debug\Reportes.exe.config
+C:\Users\INFT\Desktop\PortalRentasWebApp\PortalRentasAPP\Reportes\obj\Debug\Reportes.csproj.CoreCompileInputs.cache
