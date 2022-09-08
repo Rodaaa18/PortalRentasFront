@@ -2,7 +2,17 @@
     margin-left: 0;
     margin-right: 0;
 }
-
+.logo__muni{
+    position : absolute;
+    width : 150px;
+    right : 10px;
+    top : 10px;
+}
+.btn__salir{
+    position: absolute;
+    right : 1%;
+    top : 60px;
+}
 .overflow-x {
     overflow-x: scroll;
 }

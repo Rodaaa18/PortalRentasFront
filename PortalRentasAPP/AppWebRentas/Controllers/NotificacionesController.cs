@@ -1,4 +1,5 @@
 ﻿using AppWebRentas.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Reporting.WebForms;
 using Microsoft.ReportingServices.Interfaces;
 using Newtonsoft.Json;
@@ -8,35 +9,78 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Configuration;
 using System.Web.Mail;
 using System.Web.Mvc;
+using ActionResult = System.Web.Mvc.ActionResult;
 
 namespace AppWebRentas.Controllers
 {
     public class NotificacionesController : ApiBaseController
     {
         // GET: Notificaciones
-        public ActionResult Index()
+        public ActionResult Index(string token)
         {
-            return View();
-        }
-        public ActionResult GetNotificaciones(NotificacionViewModel model)
-        {
-            if (Session["Token"] is null || Session["Token"].ToString() == "")
-            {
-                TempData["ErrorMessage"] = $@"Debe Iniciar Sesión";
+            Client.BaseUrl = new Uri(ApiUri + "token");
+            LocalRequest = new RestRequest(Method.GET);
+            LocalRequest.AddParameter("Token", token);
+            //LocalRequest.AddHeader("Authorization", $@"Bearer {token}");
+            LocalRequest.RequestFormat = DataFormat.Json;
 
-                return RedirectToAction("Index", "Login");
+            IRestResponse<ValuesLoginResult> respuestaApis = Client.Execute<ValuesLoginResult>(LocalRequest);
+
+           var tokenResult = respuestaApis.Data.Result;
+            
+            Session["Token"] = respuestaApis.Data.Result;
+
+            if (respuestaApis.Data.Result.ToString() == token)
+            {
+                return View();
+            }else
+            {
+                return RedirectToAction("Shared", "Error");
             }
-            var token = Session["Token"].ToString();
+            
+        }
+        public System.Web.Mvc.ActionResult GetTokenUser(string usuario)
+        {
+            Client.BaseUrl = new Uri(ApiUri + "token");
+            LocalRequest = new RestRequest(Method.GET);
+            LocalRequest.AddParameter("Usuario", usuario);
+            //LocalRequest.AddHeader("Authorization", $@"Bearer {token}");
+            LocalRequest.RequestFormat = DataFormat.Json;
+
+            IRestResponse<ValuesLoginResult> respuestaApi = Client.Execute<ValuesLoginResult>(LocalRequest);
+
+            NotificacionResponse Response = JsonConvert.DeserializeObject<NotificacionResponse>(respuestaApi.Content);
+
+            return RedirectToAction("Index", "MainMenu");
+        }
+        public System.Web.Mvc.ActionResult GetNotificaciones(NotificacionViewModel model)
+        {
+            //if (Session["Token"] is null || Session["Token"].ToString() == "")
+            //{
+            //    TempData["ErrorMessage"] = $@"Debe Iniciar Sesión";
+
+            //    return RedirectToAction("Index", "Login");
+            //}
+            //var token = Session["Token"].ToString();
+
+            
+
+
+
+
             Client.BaseUrl = new Uri(ApiUri + "notificacion");
             LocalRequest = new RestRequest(Method.GET);
             LocalRequest.AddParameter("start", model.start);
             LocalRequest.AddParameter("pageSize", model.pageSize);
-            LocalRequest.AddHeader("Authorization", $@"Bearer {token}");
+            //LocalRequest.AddHeader("Authorization", $@"Bearer {token}");
             LocalRequest.RequestFormat = DataFormat.Json;
 
             IRestResponse<ValuesLoginResult> respuestaApi = Client.Execute<ValuesLoginResult>(LocalRequest);
@@ -55,21 +99,19 @@ namespace AppWebRentas.Controllers
         public JsonResult ListarNotificacionesGrillaPaginada(ModeloConsultaGrilla modeloConsulta, ModeloExtraParamNotificacion extraParam)
         {
 
-            if (Session["Token"] is null || Session["Token"].ToString() == "")
-            {
-                TempData["ErrorMessage"] = $@"Debe Iniciar Sesión";
+            //if (Session["Token"] is null || Session["Token"].ToString() == "")
+            //{
+            //    TempData["ErrorMessage"] = $@"Debe Iniciar Sesión";
 
-                return Json(Models.JsonReturn.RedireccionarIndex());
-            }
-           
-
-
-            var token = Session["Token"].ToString();
+            //    return Json(Models.JsonReturn.RedireccionarIndex());
+            //}
+            
+            //var token = Session["Token"].ToString();
             Client.BaseUrl = new Uri(ApiUri + "notificacion");
             LocalRequest = new RestRequest(Method.GET);
             LocalRequest.AddParameter("start", modeloConsulta.start);
             LocalRequest.AddParameter("pageSize", modeloConsulta.length);
-            LocalRequest.AddHeader("Authorization", $@"Bearer {token}");
+            //LocalRequest.AddHeader("Authorization", $@"Bearer {token}");
             LocalRequest.RequestFormat = DataFormat.Json;
 
             IRestResponse<ValuesLoginResult> respuestaApi = Client.Execute<ValuesLoginResult>(LocalRequest);
@@ -82,10 +124,10 @@ namespace AppWebRentas.Controllers
 
 
 
-            if (Session == null || Session["Token"] == null)
-            {
-                return Json(Models.JsonReturn.RedireccionarIndex());
-            }
+            //if (Session == null || Session["Token"] == null)
+            //{
+            //    return Json(Models.JsonReturn.RedireccionarIndex());
+            //}
             List<Result> ListNotificaciones = (List<Result>)Session["Notificaciones"];
             List<object> listaResultado = new List<object>();
             List<Result> listaPaginada = new List<Result>();
@@ -170,8 +212,8 @@ namespace AppWebRentas.Controllers
                 data = listaResultado
             }));
         }
-        [HttpPost]
-        public ActionResult SendEmail(string idCuenta)
+        [System.Web.Http.HttpPost]
+        public System.Web.Mvc.ActionResult SendEmail(string idCuenta)
         {
             if (Session["Token"] is null || Session["Token"].ToString() == "")
             {
@@ -238,7 +280,22 @@ namespace AppWebRentas.Controllers
 
             return RedirectToAction("Index", "MainMenu");
         }
+        public static string MD5Hash(string text)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
 
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+
+            byte[] result = md5.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+
+            return strBuilder.ToString();
+        }
         public class ModeloExtraParamNotificacion
         {
             public List<ExtraParamNotific> Params { get; set; }

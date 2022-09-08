@@ -2,7 +2,9 @@
 using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Configuration;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace AppWebRentas.Controllers
 {
@@ -45,6 +47,14 @@ namespace AppWebRentas.Controllers
 
 
             return RedirectToAction("Index", "Notificaciones");
+        }
+        public ActionResult LogOff()
+        {
+            var url = ConfigurationManager.AppSettings["AppLogin"];
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            if (HttpContext.Session != null) HttpContext.Session["Token"] = null;
+            return Redirect(url);
         }
     }
 }

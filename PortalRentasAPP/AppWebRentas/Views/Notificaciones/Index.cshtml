@@ -5,19 +5,22 @@
     ViewBag.Title = "Index";
 }
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Inicio</li>
-    </ol>
-</nav>
-<section class="container-fluid mt-5">
+
+<section class="container-fluid mt-5 ml-2">
+    <div class="row">
+        <ol class="breadcrumb ml-3" style="margin-bottom: 5px;">
+            <li class="active">Inicio</li>
+        </ol>
+    </div>
+    <img src="@Url.Content("~/assets/images/login_libertador.png")" class="logo__muni" />
+    <a href="@Url.Content("~/Login/LogOff")" class="btn__salir"><p class="text-light"><i class="fas fa-power-off mr-2 menu-icon"></i></p></a>
     <div class="row">
         <div class="col-sm- col-md-2 col-lg-4">
             <div class="text-left">
                 <h2>Menú</h2>
             </div>
             <p>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                     Notificaciones de Deuda
                 </a>
             </p>

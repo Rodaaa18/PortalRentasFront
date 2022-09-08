@@ -79,13 +79,11 @@
 </head>
 <body>
 
-    <div">
+    <div class="ml-2 mt-2">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Portal Rentas Web</p>
-        </footer>
+
     </div>
+
     <script src="@Url.Content("~/assets/js/infap.js?" + version)"></script>
     @*@Scripts.Render("~/bundles/jquery")*@
     @*@Scripts.Render("~/bundles/bootstrap")*@

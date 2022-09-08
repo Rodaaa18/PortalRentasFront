@@ -6,21 +6,24 @@
     @{
         Layout = "~/Views/Shared/_Layout.cshtml";
         ViewBag.Title = "Index";
+        var token = Session["Token"].ToString();
     }
 
-<section class="container-fluid mt-5">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Inicio</li>
+<section class="container-fluid mt-5 ml-2">
+    <div class="row">
+        <ol class="breadcrumb ml-3" style="margin-bottom: 5px;">
+            <li><a href="@Url.Action("Index","Notificaciones", new {token = token})">Inicio</a>&nbsp/&nbsp</li>
+            <li class="active">Notificaciones</li>
         </ol>
-    </nav>
+    </div>
+    <img src="@Url.Content("~/assets/images/login_libertador.png")" class="logo__muni" />
     <div class="row">
         <div class="col-sm- col-md-2 col-lg-4">
             <div class="text-left">
                 <h2>Menú</h2>
             </div>
             <p>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                     Notificaciones de Deuda
                 </a>
             </p>
@@ -32,18 +35,18 @@
         </div>
     </div>
 </section>
-    <section style="width:100%;">
+    <section style="width:100%; left : 0;">
             <div class="row">
                 <div class="col">
-                    <div id="login-box" class="d-flex flex-column justify-content-center">
-                        <div class="card shadow">
+                    <div id="login-box" class="d-flex flex-column justify-content-center p-4">
+                        <div class="card shadow p-5">
                             <section class="col-lg-16 connectedSortable ui-sortable" style="margin-top: 10px;">
                                 <div class="d-flex flex-column justify-content-center">
                                     <div class="col-lg-16" style="margin-bottom: 10px;">
-                                        <div class=""  style="width:100%;>
-                                            <div class="card-body"  style="width:100%;>
+                                        <div class=""  style="width:100%;" >
+                                            <div class="card-body"  style="width:100%;" >
                                                 <div class="table-responsive">
-                                                    <table id="grillaNotificacion" class="table" style="width:100%!                                 important;">
+                                                    <table id="grillaNotificacion" class="table" style="width:100%!                                 important; margin-left: 0;">
                                                         <thead>
                                                             <tr>
                                                                 <th>Apellido y Nombre</th>

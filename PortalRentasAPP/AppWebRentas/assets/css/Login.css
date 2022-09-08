@@ -1,7 +1,12 @@
 ﻿.row {
     padding: 7px;
 }
-
+.logo__muni {
+    position: absolute;
+    width: 150px;
+    right: 10px;
+    top: 10px;
+}
 img {
     border-radius: 5px;
 }
