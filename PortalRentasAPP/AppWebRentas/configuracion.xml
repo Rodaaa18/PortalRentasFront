@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuracion>
+  <mensajes>
+    <mensaje nombre="alerta_demo" filename="alerta.png">
+    </mensaje>
+    <mensaje nombre="error_demo" filename="error.png">
+    </mensaje>
+    <mensaje nombre="info_demo" filename="info.png">
+    </mensaje>
+    <mensaje nombre="factura_proveedor_guardar_ok" filename="exito.png">
+    </mensaje>
+    <mensaje nombre="factura_proveedor_guardar_error" filename="error.png">
+    </mensaje>
+    <mensaje nombre="factura_proveedor_eliminar_error" filename="error.png">
+    </mensaje>
+    <mensaje nombre="factura_proveedor_eliminar_ok" filename="exito.png">
+    </mensaje>
+    <mensaje nombre="info_pago_existente" filename="info.png">
+    </mensaje>
+    <mensaje nombre="error_pago" filename="error.png">
+    </mensaje>
+    <mensaje nombre="sin_conexion" filename="error.png">
+    </mensaje>
+    <mensaje nombre="error_obtener_formulario_paypertic" filename="error.png">
+    </mensaje>
+    <mensaje nombre="canal_de_pago_no_soportado" filename="alerta.png">
+    </mensaje>
+    <mensaje nombre="error_conexion_ajax" filename="alerta.png">
+    </mensaje>
+    <mensaje nombre="error_listar_automotores" filename="alerta.png">
+    </mensaje>
+    <mensaje nombre="error_listar_inmuebles" filename="alerta.png">Sin conexión web. Espere unos minutos y vuelva a intentarlo. Muchas gracias.</mensaje>
+    <mensaje nombre="error_listar_comercios" filename="alerta.png">Sin conexión web. Espere unos minutos y vuelva a intentarlo. Muchas gracias.</mensaje>
+    <mensaje nombre="info_formato_imagenes_permitidos" filename="info.png">Solo .jpeg, .jpg, .png, .gif, .bmp son formatos permitidos.</mensaje>
+    <mensaje nombre="error_listar_facturas_proveedor" filename="error.png">Se generó un error mientras intentabamos listar las facturas del proveedor. Intentelo nuevamente en unos minutos, si el error persiste por favor ponganse en contacto con su administrador de Sistema. Muchas gracias y disculpe las molestias ocasionadas.</mensaje>
+    <mensaje nombre="nro_factura_existente" filename="error.png">El nro de comprobante "FAC" ingresado ya existe</mensaje>
+    <mensaje nombre="datos_requeridos_faltantes" filename="alerta.png">Los siguientes campos son requeridos: </mensaje>
+    <mensaje nombre="error_consultar_datos_lider" filename="alerta.png">Error al consultar datos del lider.</mensaje>
+    <mensaje nombre="error_listar_usuarios" filename="alerta.png">Sin conexión web. Espere unos minutos y vuelva a intentarlo. Muchas gracias.</mensaje>
+    <mensaje nombre="error_update_proveedores" filename="error.png">Se genero un error al intentar actualizar los datos.</mensaje>
+    <mensaje nombre="ok_update_proveedores" filename="exito.png">Se actualizaron los datos correctamente.</mensaje>
+  </mensajes>
+</configuracion>

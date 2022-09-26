@@ -1,0 +1,117 @@
+﻿
+@{
+    /**/
+
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    string mensajeFormatoNoPermitido = "'.jpeg','.jpg', '.png', '.gif', '.bmp' son formatos permitidos.";
+    string urlImagenFormatoNoPermitido = "ImagenesMensaje/info.png";
+    var v1 = false;
+    var v2 = false;
+
+
+    AppWebRentas.Util.ModeloMensaje modeloFormatoNoPermitido = AppWebRentas.Util.AdministradorMensajes.ObtenerMensaje("info_formato_imagenes_permitidos");
+
+    if (modeloFormatoNoPermitido != null)
+    {
+        mensajeFormatoNoPermitido = modeloFormatoNoPermitido.Mensaje;
+        urlImagenFormatoNoPermitido = modeloFormatoNoPermitido.UrlImagen;
+    }
+    var token = Session["Token"].ToString();
+
+}
+<div class="row">
+    <ol class="breadcrumb ml-5" style="margin-bottom: 5px;">
+        <li>Superadmin &nbsp/&nbsp</li>
+        <li class="active"> Modifica Configuración</li>
+    </ol>
+</div>
+<!-- Contenido ID para mostrar despues de spinner -->
+@using (Html.BeginForm("Edit", "Superadmin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <input type="submit" value="Guardar" class="btn btn-danger float-right mt-2 mr-5 mb-4 move" style="background-color:rgb(166, 37, 52)" onclick="" />
+    <div class="row">
+        <section class="col-lg-6 connectedSortable ui-sortable" style="margin-top: 10px;">
+            <div class="row">
+                <div class="col-md-12" style="margin-bottom: 20px;">
+                    <div class="container pt-2">
+                        <!-- Mensajes -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card shadow">
+                                    <div class="card-header text-center">
+                                        <h2 class="h6">Mensajes</h2>
+                                        Modifique tipos de mensaje de sistema
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                @if (ViewBag.Mensajes != null)
+                                                {
+                                                    foreach (var item in ViewBag.Mensajes)
+                                                    {
+                                                        <div class="form-group">
+                                                            <div class="col-md-12">
+                                                                <label class="h6">@item.nombre</label><br>
+                                                                <input type="text" class="form-control" id="txt_@item.nombre" name="txt_@item.nombre" value="@item.texto" />
+                                                            </div>
+                                                            <br>
+                                                            <div class="col-md-12">
+                                                                <img id="img_msjAlerta" width="50" height="50" src="@Url.Content("~/ImagenesMensaje/" + item.filename)" />
+                                                                <input type="file" id="file_@item.nombre" name="file_@item.nombre" onchange="fileCheck(this);" />
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+}
+<script>
+    $(window).on("load", function () {
+
+        $(function () {
+            $('#ImageData').change(function (e) {
+                addImage(e);
+            });
+
+            function addImage(e) {
+                var file = e.target.files[0],
+                    imageType = /image.*/;
+
+                if (!file.type.match(imageType))
+                    return;
+
+                var reader = new FileReader();
+                reader.onload = fileOnload;
+                reader.readAsDataURL(file);
+            }
+
+            function fileOnload(e) {
+                var result = e.target.result;
+                $('#imgSalida').attr("src", result);
+            }
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+        function fileCheck(obj) {
+            var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+            if ($.inArray($(obj).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                msjInfo("Advertencia",'@mensajeFormatoNoPermitido', urlContent + '@urlImagenFormatoNoPermitido');
+            }
+        }
+</script>

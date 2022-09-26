@@ -26,6 +26,7 @@ namespace AppWebRentas.Models
         public string obs { get; set; }
         public bool entregado { get; set; }
         public string email { get; set; }
+        public int totalFilas { get; set; }
     }
 
 }

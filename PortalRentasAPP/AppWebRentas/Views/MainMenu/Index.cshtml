@@ -9,7 +9,7 @@
         var token = Session["Token"].ToString();
     }
 
-<section class="container-fluid mt-5 ml-2">
+<section class="container-fluid mt-5 ml-2"  style="height : 100%;">
     <div class="row">
         <ol class="breadcrumb ml-3" style="margin-bottom: 5px;">
             <li><a href="@Url.Action("Index","Notificaciones", new {token = token})">Inicio</a>&nbsp/&nbsp</li>
@@ -17,6 +17,7 @@
         </ol>
     </div>
     <img src="@Url.Content("~/assets/images/login_libertador.png")" class="logo__muni" />
+    <a href="@Url.Content("~/Login/LogOff")" class="btn__salir"><p class="text-light"><i class="fas fa-power-off mr-2 menu-icon"></i></p></a>
     <div class="row">
         <div class="col-sm- col-md-2 col-lg-4">
             <div class="text-left">
@@ -35,11 +36,11 @@
         </div>
     </div>
 </section>
-    <section style="width:100%; left : 0;">
+    <section style="width:100%; left : 0; height : 100%; position : relative;">
             <div class="row">
                 <div class="col">
                     <div id="login-box" class="d-flex flex-column justify-content-center p-4">
-                        <div class="card shadow p-5">
+                        <div class="card shadow p-0">
                             <section class="col-lg-16 connectedSortable ui-sortable" style="margin-top: 10px;">
                                 <div class="d-flex flex-column justify-content-center">
                                     <div class="col-lg-16" style="margin-bottom: 10px;">
@@ -58,7 +59,7 @@
                                                                 <th>Fecha de Notificación</th>
                                                                 <th>Fecha Alcance</th>
                                                                 <th>Observacion</th>
-                                                                <th>Nro Ntificación</th>
+                                                                <th>Nro Notificación</th>
                                                                 <th>Email</th>
                                                                 <th></th>
                                                             </tr>
@@ -157,7 +158,7 @@
             ];
 
             crearGrilla("#grillaNotificacion", "Notificaciones/ListarNotificacionesGrillaPaginada",
-                "Result", columnas, function () { },
+                "Notificaciones de deuda", columnas, function () { },
                 true, true, 1, 'desc');
 
 

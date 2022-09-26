@@ -1,6 +1,13 @@
 ﻿
+@using System.Configuration;
+@using AppWebRentas.Models;
+
 @{
-    var version = "1.0.0";
+    string version = "1.0.0";
+    string strLogo = null;
+    string strDisplay = null;
+
+
     string mensajeErrorConexionAjax = "Sin conexión web. Espere unos minutos y vuelva a intentarlo. Muchas gracias.";
     string urlImagenErrorConexionAjax = "ImagenesMensaje/error.png";
 
@@ -11,15 +18,16 @@
         mensajeErrorConexionAjax = modeloErrorConexionAjax.Mensaje;
         urlImagenErrorConexionAjax = modeloErrorConexionAjax.UrlImagen;
     }
+    var token = Session["Token"].ToString();
 }
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Portal Rentas Web</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ggmm - Autogestion Web</title>
 
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -85,26 +93,71 @@
     <!-- Slim advanced select dropdown    -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.css" rel="stylesheet" />
-
 </head>
-<body style="height: 100%;">
 
-    <div style="height:100%" class="d-flex flex-column justify-content-end align-items-end">
-        <div class="container_body body-content ml-2 ">
-            @RenderBody()
-
-        </div>
-        <footer id="sticky-footer" class="flex-shrink-0 py-2 text-white-50" style="background-color: rgb(166, 37, 52); width: 100vw; z-index : 60; ">
-            <div class="d-flex justify-content-end">
-                <img src="@Url.Content("~/assets/images/ggmmLogoBlanco.png")" class="img-fluid" alt="" style="width : 50px;">
+<body class="body__layout">
+    <!-- Menu Superior -->
+    <div style="grid-area: cuerpo;">
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="p-4 bg-light">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="@Url.Action("Index","Notificaciones", new {token = token})" class="nav-link"><p class="text-dark"><i class="fas fa-home mr-2 menu-icon"></i> Página Principal </p></a>
+                    </li>
+                    <li class="nav-item" id="AdmTramite">
+                        <a href="@Url.Action("Index","ConfiguracionSites")" class="nav-link"><p class="text-dark"><i class="fas fa-desktop mr-2 menu-icon"></i>Configuración</p></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
             </div>
+            <div class="clearfix"></div>
+        </div>
+        <nav class="navbar navbar-light bg-light">
+            <button class="navbar-toggler" style="border: none" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-user menu-icon"></i>
+            </button>
+            <a class="navbar-brand" href="#">
+                <div class="text-center">
+                    <a href="@Url.Content("~/DashBoard/index")" class="logo responsive-image">
+                       
+                    </a>
+                </div>
+            </a>
+        </nav>
+
+        <!-- Loader -->
+        <div id="load"></div>
+
+        <!-- Begin page -->
+        <div id="contenido" style="display: grid;">
+            @RenderBody()
+        </div>
+    </div>
+    <div class="row div__footer" style="grid-area : fooer;">
+        <footer class="footer p-1 mt-4 text-right" style="background-color: rgb(166, 37, 52); width:100%;">
+            <a href="http://www.ggmm.com.ar" target="_blank" id="ggmm"><img src="@Url.Content("~/assets/images/ggmmLogoBlanco.png")" style="width : 80px;" />  </a>
         </footer>
     </div>
 
-
+    <!-- Mensaje de espera -->
     <script src="@Url.Content("~/assets/js/infap.js?" + version)"></script>
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @*@Scripts.Render("~/bundles/bootstrap")*@
+
+    <script>
+        var resizefunc = [];
+
+        function changelogo() {
+            var logo = document.getElementById('logo');
+            if (logo.style.display == "" || logo.style.display == "block" || logo.style.display == "inline-block") {
+                $("#logo").hide();
+                $("#logoresponsive").show();
+            } else {
+                $("#logoresponsive").hide();
+                $("#logo").show();
+            }
+        }
+    </script>
+
+    <!--MODAL-->
     <div class="modal fade" id="small_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div id="contenedor_modal">
@@ -128,34 +181,6 @@
     </div>
 </body>
 </html>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $('#test').click(function () {
-            $.blockUI({ message: $('#question'), css: { width: '275px' } });
-        });
-
-        $('#yes').click(function () {
-            // update the block message
-            $.blockUI({ message: "<h1>Remote call in progress...</h1>" });
-
-            $.ajax({
-                url: 'wait.php',
-                cache: false,
-                complete: function () {
-                    // unblock when remote call returns
-                    $.unblockUI();
-                }
-            });
-        });
-
-        $('#no').click(function () {
-            $.unblockUI();
-            return false;
-        });
-
-    });
-</script>
 
 <script type="text/javascript">
     var urlContent = '@(Url.Content("~"))';

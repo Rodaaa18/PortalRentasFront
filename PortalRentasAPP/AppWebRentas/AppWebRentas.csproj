@@ -287,15 +287,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ApiBaseController.cs" />
+    <Compile Include="Controllers\ConfigurationSitesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MainMenuController.cs" />
     <Compile Include="Controllers\NotificacionesController.cs" />
+    <Compile Include="Controllers\SuperadminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdministradorError.cs" />
     <Compile Include="Models\BadRequest.cs" />
     <Compile Include="Models\ContribuyenteResponse.cs" />
     <Compile Include="Models\JsonReturn.cs" />
+    <Compile Include="Models\Logger.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ModeloConsultaGrilla.cs" />
     <Compile Include="Models\ModeloRespuesta.cs" />
@@ -358,6 +362,7 @@
     <Content Include="assets\images\gallery\8.jpg" />
     <Content Include="assets\images\gallery\9.jpg" />
     <Content Include="assets\images\ggmm.jpg" />
+    <Content Include="assets\images\ggmmLogoBlanco.png" />
     <Content Include="assets\images\ggmm_login.png" />
     <Content Include="assets\images\ggtt.jpg" />
     <Content Include="assets\images\login_libertador.png" />
@@ -1322,6 +1327,7 @@
     <Content Include="assets\plugins\x-editable\dist\jqueryui-editable\img\loading.gif" />
     <Content Include="assets\plugins\x-editable\dist\jqueryui-editable\js\jqueryui-editable.js" />
     <Content Include="assets\plugins\x-editable\dist\jqueryui-editable\js\jqueryui-editable.min.js" />
+    <Content Include="configuracion.xml" />
     <Content Include="Content\assets\brand\coreui.svg" />
     <Content Include="Content\assets\favicon\browserconfig.xml" />
     <Content Include="Content\assets\favicon\favicon.ico" />
@@ -2609,6 +2615,10 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="ImagenesMensaje\alerta.png" />
+    <Content Include="ImagenesMensaje\error.png" />
+    <Content Include="ImagenesMensaje\exito.png" />
+    <Content Include="ImagenesMensaje\info.png" />
     <Content Include="Scripts\ajax.js" />
     <Content Include="assets\css\bootstrap-theme.css.map" />
     <Content Include="assets\css\bootstrap-theme.min.css.map" />
@@ -2816,9 +2826,12 @@
     <Content Include="Views\MainMenu\Index.cshtml" />
     <Content Include="Views\Notificaciones\Index.cshtml" />
     <Content Include="Views\MainMenu\MenuGrilla.cshtml" />
+    <Content Include="Views\Superadmin\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ConfigurationSites\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

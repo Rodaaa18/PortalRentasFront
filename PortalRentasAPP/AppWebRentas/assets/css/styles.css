@@ -16,7 +16,14 @@
 .overflow-x {
     overflow-x: scroll;
 }
-
+.container_body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    width: 100vw;
+    height: 100%;
+}
 .input-tabla {
     border: none;
     border-left: 1px solid lightgrey;

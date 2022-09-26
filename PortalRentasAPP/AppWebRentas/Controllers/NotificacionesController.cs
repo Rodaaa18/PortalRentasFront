@@ -24,27 +24,38 @@ namespace AppWebRentas.Controllers
     public class NotificacionesController : ApiBaseController
     {
         // GET: Notificaciones
+        [System.Web.Mvc.HttpGet]
         public ActionResult Index(string token)
         {
-            Client.BaseUrl = new Uri(ApiUri + "token");
-            LocalRequest = new RestRequest(Method.GET);
-            LocalRequest.AddParameter("Token", token);
-            //LocalRequest.AddHeader("Authorization", $@"Bearer {token}");
-            LocalRequest.RequestFormat = DataFormat.Json;
-
-            IRestResponse<ValuesLoginResult> respuestaApis = Client.Execute<ValuesLoginResult>(LocalRequest);
-
-           var tokenResult = respuestaApis.Data.Result;
-            
-            Session["Token"] = respuestaApis.Data.Result;
-
-            if (respuestaApis.Data.Result.ToString() == token)
+            try
             {
-                return View();
-            }else
-            {
-                return RedirectToAction("Shared", "Error");
+                Client.BaseUrl = new Uri(ApiUri + "token");
+                LocalRequest = new RestRequest(Method.GET);
+                LocalRequest.AddParameter("Token", token);
+                //LocalRequest.AddHeader("Authorization", $@"Bearer {token}");
+                LocalRequest.RequestFormat = DataFormat.Json;
+
+                IRestResponse<ValuesLoginResult> respuestaApis = Client.Execute<ValuesLoginResult>(LocalRequest);
+
+                var tokenResult = respuestaApis.Data.Result;
+
+                Session["Token"] = respuestaApis.Data.Result;
+
+                if (respuestaApis.Data.Result.ToString() == token)
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Shared", "Error");
+                }
             }
+            catch(Exception ex)
+            {
+                AdministradorError.LogError("Se generó un error inesperado", "Index", ex, Request != null ? Request.Browser : null);
+                return Json(Models.JsonReturn.ErrorConMsjSimple(Util.AdministradorMensajes.ObtenerMensaje("error_listar_inmuebles")), JsonRequestBehavior.AllowGet);
+            }
+           
             
         }
         public System.Web.Mvc.ActionResult GetTokenUser(string usuario)
@@ -63,19 +74,6 @@ namespace AppWebRentas.Controllers
         }
         public System.Web.Mvc.ActionResult GetNotificaciones(NotificacionViewModel model)
         {
-            //if (Session["Token"] is null || Session["Token"].ToString() == "")
-            //{
-            //    TempData["ErrorMessage"] = $@"Debe Iniciar Sesión";
-
-            //    return RedirectToAction("Index", "Login");
-            //}
-            //var token = Session["Token"].ToString();
-
-            
-
-
-
-
             Client.BaseUrl = new Uri(ApiUri + "notificacion");
             LocalRequest = new RestRequest(Method.GET);
             LocalRequest.AddParameter("start", model.start);
@@ -98,15 +96,6 @@ namespace AppWebRentas.Controllers
 
         public JsonResult ListarNotificacionesGrillaPaginada(ModeloConsultaGrilla modeloConsulta, ModeloExtraParamNotificacion extraParam)
         {
-
-            //if (Session["Token"] is null || Session["Token"].ToString() == "")
-            //{
-            //    TempData["ErrorMessage"] = $@"Debe Iniciar Sesión";
-
-            //    return Json(Models.JsonReturn.RedireccionarIndex());
-            //}
-            
-            //var token = Session["Token"].ToString();
             Client.BaseUrl = new Uri(ApiUri + "notificacion");
             LocalRequest = new RestRequest(Method.GET);
             LocalRequest.AddParameter("start", modeloConsulta.start);
@@ -207,7 +196,7 @@ namespace AppWebRentas.Controllers
             return Json(Models.JsonReturn.SuccessConRetorno(new
             {
                 draw = modeloConsulta.draw,
-                recordsTotal = ListNotificaciones.Count(),
+                recordsTotal = ListNotificaciones.Select(x=> x.totalFilas).FirstOrDefault(),
                 recordsFiltered = ListNotificaciones.Count(),
                 data = listaResultado
             }));
